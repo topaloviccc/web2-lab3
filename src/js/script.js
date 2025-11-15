@@ -158,6 +158,7 @@ function wonGame() {
 		ctx.fillStyle = "yellow";
 		ctx.shadowBlur = 0;
 		ctx.fillText("CONGRATS, YOU WON!", canvas.width / 2, canvas.height / 2);
+		saveBestScore();
 		return true;
 	} else {
 		return false;
