@@ -211,6 +211,7 @@ function saveBestScore() {
 
 // prikaz najboljeg rezultata iz localStoragea
 function displayBestScore() {
+	ctx.clearRect(canvas.width - 150, 0, 150, 40);
 	const highScore = localStorage.getItem("highScore");
 	ctx.font = "16px Verdana";
 	ctx.textBaseline = "top";
