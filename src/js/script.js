@@ -179,6 +179,7 @@ function gameOver() {
 function wonGame() {
 	// prikazuje poruku kada je igra pobijeđena i sve su cigle uništene
 	if (currScore == BRICKS_TOTAL) {
+		ctx.clearRect(canvas.width - 150, 0, 150, 40);
 		ctx.font = "bold 40px Verdana";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
@@ -211,7 +212,6 @@ function saveBestScore() {
 
 // prikaz najboljeg rezultata iz localStoragea
 function displayBestScore() {
-	ctx.clearRect(canvas.width - 150, 0, 150, 40);
 	const highScore = localStorage.getItem("highScore");
 	ctx.font = "16px Verdana";
 	ctx.textBaseline = "top";
