@@ -121,10 +121,7 @@ function detectEdgesColision() {
 	if (ballY <= 0) {
 		ballSpeedY = -ballSpeedY;
 	}
-	// ako loptica padne ispod donjeg ruba, igra završava i ispisuje se game over
-	if (ballY + ballDim >= canvas.height) {
-		gameOver();
-	}
+	// ako loptica padne ispod donjeg ruba, igra završava i ispisuje se game over - to se provjerava u gameOver() funkciji
 }
 
 // kolizija s palicom (x koordinate loptice moraju biti unutar x koordinata palice a donji rub loptice mora se poklapati s gornjim rubom palice)
@@ -163,15 +160,20 @@ function detectBrickCollision() {
 
 // funkcije za završetak igre, spremaju najbolji rezultat
 function gameOver() {
-	// prikazuje poruku kad je igra izgubljena
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.font = "bold 40px Verdana";
-	ctx.textAlign = "center";
-	ctx.textBaseline = "middle";
-	ctx.fillStyle = "yellow";
-	ctx.shadowBlur = 0;
-	ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
-	saveBestScore();
+	// prikazuje poruku kad je igra izgubljena, ako loptica padne ispod donjeg ruba, igra završava i ispisuje se game over
+	if (ballY + ballDim >= canvas.height) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.font = "bold 40px Verdana";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillStyle = "yellow";
+		ctx.shadowBlur = 0;
+		ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+		saveBestScore();
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function wonGame() {
@@ -193,7 +195,7 @@ function wonGame() {
 // prikaz trenutnog rezultata
 function displayCurrScore() {
 	ctx.font = "16px Verdana";
-	ctx.textBaseline = "middle";
+	ctx.textBaseline = "top";
 	ctx.fillStyle = "yellow";
 	ctx.textAlign = "left";
 	ctx.shadowBlur = 0;
@@ -211,7 +213,7 @@ function saveBestScore() {
 function displayBestScore() {
 	const highScore = localStorage.getItem("highScore");
 	ctx.font = "16px Verdana";
-	ctx.textBaseline = "middle";
+	ctx.textBaseline = "top";
 	ctx.textAlign = "right";
 	ctx.fillStyle = "yellow";
 	ctx.shadowBlur = 0;
@@ -285,6 +287,10 @@ function refreshPage() {
 		displayBestScore();
 	}
 	if (wonGame()) {
+		displayCurrScore();
+		displayBestScore();
+		return;
+	} else if (gameOver()) {
 		displayCurrScore();
 		displayBestScore();
 		return;
